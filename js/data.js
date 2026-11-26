@@ -73,15 +73,15 @@ window.TASVEER_DATA = {
      Files live in assets/wheel/: w-NNN.webp (card) and wf-NNN.webp (full, for the viewer). */
   LINEUP: {
     dir:"assets/lineup/",
-    cards:[
-      ["Leelansh","Coordinator","#a4713f"],["Gauranshi","Coordinator","#d9899a"],
-      ["Arjun Koul","Creative Lead","#8a4be0"],["Ashnoor","Creative Lead","#8a4be0"],
-      ["Shrey","Coverage Lead","#2f5be0"],["Ajay","Coverage Lead","#2f5be0"],
-      ["Kinshuk","Videography Lead","#f0b400"],["Khushal","Videography Lead","#f0b400"],
-      ["Harshit","Post-Production Lead","#1f9a8c"],["Rojleena","Events Lead","#d6346b"],
-      ["Daksha","Events Lead","#d6346b"],["Hemant","PR Lead","#f27a2b"],
-      ["Stanzin","PR Lead","#f27a2b"],["Ariv","Treasurer","#6e9bf0"],
-      ["Nirmit","Treasurer","#6e9bf0"],["Mukul","Webdev Lead","#4fe06a"]
+    cards:[   /* [name, role, accent, poster file number] — the number keeps each person's poster files (pt-NN / p-NN) when the order changes */
+      ["Leelansh","Coordinator","#d49a5c",1], ["Gauranshi","Coordinator","#f08fa8",2],
+      ["Ariv","Treasurer","#7aa6ff",14], ["Nirmit","Treasurer","#7aa6ff",15],
+      ["Arjun Koul","Creative Lead","#a064ff",3], ["Ashnoor","Creative Lead","#a064ff",4],
+      ["Shrey","Coverage Lead","#3d6bff",5], ["Ajay","Coverage Lead","#3d6bff",6],
+      ["Kinshuk","Videography Lead","#ffb800",7], ["Khushal","Videography Lead","#ffb800",8],
+      ["Harshit","Post-Production Lead","#20b8a6",9], ["Rojleena","Events Lead","#ee3c78",10],
+      ["Daksha","Events Lead","#ee3c78",11], ["Hemant","PR Lead","#ff7d2e",12],
+      ["Stanzin","PR Lead","#ff7d2e",13], ["Mukul","Webdev Lead","#4fe06a",16]
     ]
   },
   WHEEL: {

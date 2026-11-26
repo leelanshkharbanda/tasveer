@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="css/drive.css">
 </head>
 <body>
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><defs><symbol id="tv-mark" viewBox="783 764 992 769"><path class="lg-teal" d="M784 765 L783 767 L1280 1531 L1280 1358 L895 765Z"/><path class="lg-teal" d="M1774 765 L1641 765 L1282 1361 L1277 1353 L1277 1526 L1281 1532 L1284 1531Z"/><path class="lg-ink" d="M925 765 L1260 1289 L1278 1315 L1170 838Z"/><path class="lg-ink" d="M939 765 L939 766 L1041 793 L1048 796 L1088 806 L1117 815 L1128 817 L1139 821 L1168 828 L1179 832 L1208 839 L1459 909 L1462 909 L1605 766 L1605 765Z"/><path class="lg-ink" d="M1609 771 L1545 834 L1247 1136 L1283 1316 L1285 1315Z"/></symbol></defs></svg>
 
 <a class="skip-link" href="#story">Skip to content</a>
 <div class="grain" aria-hidden="true"></div>
@@ -50,10 +51,7 @@
 
 <header class="nav" id="nav">
   <a class="nav-logo" href="#top" data-goto="#top" aria-label="Tasveer — back to top">
-    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <path d="M4 10V4h6M22 4h6v6M28 22v6h-6M10 28H4v-6" stroke="currentColor" stroke-width="2.4"/>
-      <circle cx="16" cy="16" r="5.2" fill="currentColor"/>
-    </svg>
+    <svg class="nav-mark" aria-hidden="true"><use href="#tv-mark"/></svg>
     <span class="nav-word">TASVEER</span>
   </a>
   <div class="nav-right">
@@ -85,10 +83,7 @@
 
 <div class="intro-curtain" id="introCurtain" aria-hidden="true">
   <div class="leader">
-    <svg class="leader-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <path d="M4 10V4h6M22 4h6v6M28 22v6h-6M10 28H4v-6" stroke="currentColor" stroke-width="2.4"/>
-      <circle cx="16" cy="16" r="5.2" fill="currentColor"/>
-    </svg>
+    <svg class="leader-mark" aria-hidden="true"><use href="#tv-mark"/></svg>
     <div class="leader-word">TASVEER</div>
     <div class="leader-count mono"><span id="leaderNum">000</span></div>
     <div class="leader-bar"><span id="leaderFill"></span></div>
@@ -100,28 +95,44 @@
 
 <!-- 01 · hero — full-bleed cinema -->
 <section class="hero" id="top" data-frame="01" data-section="THE BACKYARD">
+<!-- emblem — the logo opens like a shutter; the drone footage behind it is the hero's own, so nothing repeats -->
+<div class="emblem" id="emblem">
+  <div class="em-runway" id="emRunway">
+    <div class="em-stage" id="emStage">
+      <div class="em-cover" id="emCover" aria-hidden="true"></div>
+      <div class="em-collage" id="emCollage" aria-hidden="true"><div class="em-wall" id="emWall"></div></div>
+      <div class="em-veil" id="emVeil" aria-hidden="true"></div>
+      <div class="em-logo"><svg class="logo-svg" id="emSvg" viewBox="540 540 1500 1440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tasveer — IIITD Media Society logo" focusable="false"><defs><clipPath id="lgVClip"><rect id="lgVClipRect" x="700" y="740" width="1200" height="900"/></clipPath></defs><g class="lg-in lg-crop lg-crop-l" data-px="648" data-py="650"><g class="lg-sc"><path class="lg-teal" d="M996 644 L661 644 L656 641 L656 561 L641 561 L641 641 L636 644 L565 643 L563 645 L563 656 L565 660 L637 659 L641 662 L641 994 L656 994 L656 662 L658 660 L995 660 L997 658Z"/></g></g><g class="lg-in lg-crop lg-crop-r" data-px="1925" data-py="650"><g class="lg-sc"><path class="lg-teal" d="M1584 643 L1583 655 L1585 659 L1917 660 L1917 996 L1919 1000 L1933 1000 L1933 663 L1935 659 L2016 659 L2016 643 L1935 643 L1934 567 L1932 566 L1919 566 L1917 569 L1918 640 L1916 643Z"/></g></g><g class="lg-core"><g class="lg-in lg-v" clip-path="url(#lgVClip)"><g class="lg-sc lg-v-l"><path class="lg-teal" d="M784 765 L783 767 L1280 1531 L1280 1358 L895 765Z"/></g><g class="lg-sc lg-v-r"><path class="lg-teal" d="M1774 765 L1641 765 L1282 1361 L1277 1353 L1277 1526 L1281 1532 L1284 1531Z"/></g></g><g class="lg-in lg-blade" data-cx="1102" data-cy="1040"><g class="lg-sc"><path class="lg-ink" d="M925 765 L1260 1289 L1278 1315 L1170 838Z"/></g></g><g class="lg-in lg-blade" data-cx="1272" data-cy="838"><g class="lg-sc"><path class="lg-ink" d="M939 765 L939 766 L1041 793 L1048 796 L1088 806 L1117 815 L1128 817 L1139 821 L1168 828 L1179 832 L1208 839 L1459 909 L1462 909 L1605 766 L1605 765Z"/></g></g><g class="lg-in lg-blade" data-cx="1428" data-cy="1044"><g class="lg-sc"><path class="lg-ink" d="M1609 771 L1545 834 L1247 1136 L1283 1316 L1285 1315Z"/></g></g></g><g class="lg-word"><g class="lg-in lg-ch" data-cx="740"><g class="lg-sc"><path class="lg-ink" d="M660 1642 L660 1686 L710 1686 L711 1687 L711 1813 L767 1813 L768 1812 L768 1687 L769 1686 L819 1686 L819 1642Z"/></g></g><g class="lg-in lg-ch" data-cx="910"><g class="lg-sc"><path class="lg-ink" d="M865 1642 L815 1813 L873 1813 L875 1809 L877 1798 L879 1795 L940 1795 L946 1813 L1004 1813 L983 1742 L983 1739 L980 1732 L976 1715 L973 1708 L969 1691 L966 1684 L962 1667 L959 1660 L955 1643 L954 1642Z M908 1686 L912 1687 L917 1708 L919 1712 L926 1742 L928 1746 L927 1750 L892 1750 L891 1749 L903 1700 L905 1696 L906 1689Z"/></g></g><g class="lg-in lg-ch" data-cx="1091"><g class="lg-sc"><path class="lg-ink" d="M1030 1651 L1022 1658 L1017 1665 L1014 1671 L1010 1686 L1010 1705 L1012 1714 L1017 1726 L1022 1733 L1027 1738 L1036 1744 L1051 1749 L1104 1749 L1108 1750 L1113 1754 L1114 1762 L1108 1768 L1014 1768 L1013 1769 L1013 1813 L1120 1813 L1140 1808 L1155 1798 L1161 1791 L1167 1780 L1171 1762 L1171 1755 L1170 1754 L1170 1747 L1168 1738 L1160 1723 L1153 1716 L1147 1712 L1131 1706 L1125 1706 L1124 1705 L1074 1705 L1067 1700 L1066 1694 L1067 1691 L1070 1688 L1076 1686 L1165 1686 L1165 1642 L1056 1642 L1040 1646Z"/></g></g><g class="lg-in lg-ch" data-cx="1278"><g class="lg-sc"><path class="lg-ink" d="M1188 1642 L1233 1805 L1234 1806 L1322 1806 L1331 1772 L1333 1768 L1334 1761 L1336 1757 L1337 1750 L1343 1732 L1345 1721 L1353 1696 L1357 1678 L1361 1667 L1367 1642 L1309 1642 L1280 1761 L1278 1763 L1276 1762 L1270 1739 L1270 1735 L1268 1731 L1266 1719 L1250 1658 L1250 1654 L1247 1646 L1247 1642Z"/></g></g><g class="lg-in lg-ch" data-cx="1464"><g class="lg-sc"><path class="lg-ink" d="M1390 1640 L1390 1808 L1538 1808 L1538 1765 L1447 1765 L1445 1763 L1445 1747 L1446 1746 L1538 1746 L1538 1702 L1446 1702 L1445 1701 L1445 1685 L1447 1683 L1538 1683 L1538 1640Z"/></g></g><g class="lg-in lg-ch" data-cx="1638"><g class="lg-sc"><path class="lg-ink" d="M1564 1640 L1564 1808 L1712 1808 L1712 1765 L1621 1765 L1619 1763 L1619 1747 L1620 1746 L1712 1746 L1712 1702 L1620 1702 L1619 1701 L1619 1684 L1620 1683 L1712 1683 L1712 1640Z"/></g></g><g class="lg-in lg-ch" data-cx="1825"><g class="lg-sc"><path class="lg-ink" d="M1735 1640 L1735 1808 L1791 1808 L1791 1746 L1792 1745 L1817 1745 L1820 1748 L1854 1808 L1914 1808 L1912 1803 L1875 1743 L1877 1740 L1887 1735 L1898 1725 L1906 1712 L1909 1702 L1909 1681 L1906 1670 L1900 1659 L1891 1650 L1881 1644 L1866 1640Z M1791 1684 L1792 1683 L1846 1683 L1849 1684 L1853 1688 L1854 1694 L1853 1697 L1847 1702 L1792 1702 L1791 1701Z"/></g></g></g><g class="lg-sub"><g class="lg-in lg-ch" data-cx="664"><g class="lg-sc"><path class="lg-ink" d="M659 1856 L658 1942 L669 1942 L669 1856Z"/></g></g><g class="lg-in lg-ch" data-cx="699"><g class="lg-sc"><path class="lg-ink" d="M694 1856 L693 1942 L704 1942 L704 1856Z"/></g></g><g class="lg-in lg-ch" data-cx="735"><g class="lg-sc"><path class="lg-ink" d="M729 1856 L729 1942 L740 1942 L740 1857Z"/></g></g><g class="lg-in lg-ch" data-cx="788"><g class="lg-sc"><path class="lg-ink" d="M752 1856 L752 1865 L782 1866 L782 1941 L793 1942 L793 1866 L824 1865 L824 1856Z"/></g></g><g class="lg-in lg-ch" data-cx="872"><g class="lg-sc"><path class="lg-ink" d="M837 1856 L836 1942 L873 1942 L885 1939 L896 1933 L904 1923 L908 1910 L908 1889 L906 1880 L902 1872 L894 1864 L880 1858 L867 1856Z M848 1865 L875 1866 L883 1869 L892 1877 L897 1892 L897 1906 L892 1921 L884 1929 L877 1932 L865 1934 L847 1933Z"/></g></g><g class="lg-in lg-ch" data-cx="1006"><g class="lg-sc"><path class="lg-ink" d="M967 1856 L966 1942 L977 1942 L978 1868 L1000 1926 L1011 1926 L1032 1869 L1034 1869 L1034 1942 L1045 1942 L1045 1856 L1028 1856 L1006 1914 L1003 1911 L983 1856Z"/></g></g><g class="lg-in lg-ch" data-cx="1097"><g class="lg-sc"><path class="lg-ink" d="M1069 1856 L1069 1942 L1124 1942 L1124 1934 L1080 1933 L1081 1901 L1121 1901 L1121 1892 L1081 1892 L1080 1866 L1123 1865 L1123 1856Z"/></g></g><g class="lg-in lg-ch" data-cx="1180"><g class="lg-sc"><path class="lg-ink" d="M1145 1856 L1144 1941 L1181 1942 L1193 1939 L1204 1933 L1212 1923 L1216 1910 L1216 1889 L1214 1880 L1209 1871 L1202 1864 L1188 1858 L1174 1856Z M1156 1865 L1183 1866 L1194 1871 L1201 1879 L1205 1892 L1204 1912 L1198 1924 L1192 1929 L1185 1932 L1173 1934 L1155 1933Z"/></g></g><g class="lg-in lg-ch" data-cx="1242"><g class="lg-sc"><path class="lg-ink" d="M1236 1856 L1236 1942 L1247 1942 L1247 1856Z"/></g></g><g class="lg-in lg-ch" data-cx="1300"><g class="lg-sc"><path class="lg-ink" d="M1293 1856 L1261 1942 L1272 1942 L1280 1920 L1319 1920 L1327 1942 L1338 1942 L1306 1856Z M1299 1868 L1301 1869 L1315 1907 L1315 1911 L1283 1910Z"/></g></g><g class="lg-in lg-ch" data-cx="1418"><g class="lg-sc"><path class="lg-ink" d="M1412 1855 L1400 1858 L1390 1866 L1387 1873 L1387 1885 L1390 1892 L1395 1897 L1407 1902 L1424 1905 L1430 1908 L1433 1911 L1436 1918 L1435 1925 L1429 1932 L1422 1935 L1406 1935 L1387 1928 L1387 1938 L1401 1943 L1422 1944 L1437 1939 L1444 1932 L1447 1923 L1447 1915 L1445 1908 L1437 1899 L1431 1896 L1403 1889 L1398 1883 L1398 1874 L1404 1867 L1411 1864 L1425 1864 L1442 1869 L1442 1861 L1441 1859 L1430 1856Z"/></g></g><g class="lg-in lg-ch" data-cx="1501"><g class="lg-sc"><path class="lg-ink" d="M1496 1855 L1480 1860 L1470 1869 L1465 1877 L1462 1887 L1461 1907 L1467 1926 L1478 1938 L1489 1943 L1507 1944 L1520 1940 L1526 1936 L1534 1927 L1540 1910 L1540 1889 L1535 1874 L1526 1863 L1512 1856Z M1495 1864 L1506 1864 L1516 1868 L1523 1875 L1527 1883 L1529 1892 L1528 1913 L1523 1924 L1516 1931 L1507 1935 L1494 1935 L1487 1932 L1478 1923 L1473 1910 L1472 1899 L1475 1882 L1479 1875 L1486 1868Z"/></g></g><g class="lg-in lg-ch" data-cx="1590"><g class="lg-sc"><path class="lg-ink" d="M1585 1856 L1570 1863 L1564 1869 L1559 1877 L1555 1892 L1555 1907 L1557 1917 L1563 1929 L1576 1940 L1590 1944 L1609 1943 L1624 1936 L1624 1926 L1614 1932 L1605 1935 L1590 1935 L1580 1931 L1575 1927 L1568 1915 L1566 1903 L1567 1888 L1572 1876 L1580 1868 L1591 1864 L1604 1864 L1611 1866 L1624 1873 L1624 1863 L1608 1856Z"/></g></g><g class="lg-in lg-ch" data-cx="1650"><g class="lg-sc"><path class="lg-ink" d="M1644 1856 L1644 1942 L1654 1942 L1654 1856Z"/></g></g><g class="lg-in lg-ch" data-cx="1706"><g class="lg-sc"><path class="lg-ink" d="M1679 1856 L1678 1942 L1733 1942 L1733 1934 L1691 1934 L1689 1932 L1690 1901 L1731 1901 L1730 1892 L1690 1892 L1689 1866 L1732 1865 L1732 1856Z"/></g></g><g class="lg-in lg-ch" data-cx="1814"><g class="lg-sc"><path class="lg-ink" d="M1741 1865 L1772 1866 L1772 1942 L1783 1942 L1783 1866 L1814 1865 L1815 1858 L1844 1900 L1844 1942 L1855 1942 L1855 1901 L1885 1856 L1873 1857 L1850 1892 L1825 1856 L1742 1856Z"/></g></g></g></svg></div>
+      <div class="em-hint mono" id="emHint" aria-hidden="true">SCROLL TO OPEN <span class="arrow">↓</span></div>
+    </div>
+  </div>
+</div>
   <div class="hero-media" aria-hidden="true">
     <video id="heroVideo" muted loop playsinline preload="auto" poster="assets/drive/poster4.jpg">
       <source src="assets/drive/clip4.mp4" type="video/mp4">
     </video>
-    <video id="heroVideoB" muted loop playsinline preload="auto" poster="assets/drive/poster1.jpg">
+    <video id="heroVideoB" muted loop playsinline preload="none" poster="assets/drive/poster1.jpg">
       <source src="assets/drive/clip1.mp4" type="video/mp4">
     </video>
     <div class="hero-scrim"></div>
     <div class="hero-marquee marquee" id="heroMarquee"></div>
   </div>
+  <div class="hero-body" id="heroBody">
   <div class="hero-head">
     <p class="hero-kicker mono">TASVEER · THE MEDIA SOCIETY OF IIIT DELHI</p>
     <h1 class="hero-title">
       <span class="mask"><span>EVERY STORY IS</span></span>
       <span class="mask"><span>IN OUR BACKYARD</span></span>
     </h1>
-  </div>
-  <div class="hero-word-wrap" id="heroWordWrap" role="img" aria-label="TASVEER">
-    <span class="hero-word">TASVEER</span>
+    <div class="hero-cta">
+      <p class="hero-sub">We shoot, film, design and archive IIIT Delhi's memory.</p>
+      <a class="pill" href="#roll" data-goto="#roll">VIEW THE ROLL <span class="arr">→</span></a>
+      <a class="pill" href="#open-call" data-goto="#open-call">JOIN THE CREW <span class="arr">→</span></a>
+    </div>
   </div>
   <div class="hero-stills" id="heroStills"></div>
   <div class="hero-scroll mono" aria-hidden="true">SCROLL <span class="arrow">↓</span></div>
+  </div>
 </section>
 
 <!-- photo band -->
@@ -139,15 +150,50 @@
       <p class="story-body">We shoot, film, design and archive. Not for the feed — for the record. The campus's story, told by the people who live it.</p>
     </div>
   </div>
-  <div class="collage">
-    <figure class="c-small" data-cursor="VIEW">
-      <img src="assets/drive/photo074.webp" alt="Black-and-white portrait of a guitarist under dramatic side light" loading="lazy" decoding="async">
-      <figcaption class="mono">THE NIGHT · MONOCHROME</figcaption>
-    </figure>
-    <figure class="c-big" data-cursor="VIEW">
-      <img src="assets/drive/still1.jpg" alt="Aerial view of the fest grounds at night, a canopy of fairy lights over the crowd" loading="lazy" decoding="async">
-      <figcaption class="mono">THE BACKYARD · OKHLA, FROM ABOVE</figcaption>
-    </figure>
+  <div class="verbs" id="verbs" aria-label="What Tasveer does">
+    <div class="vb-stage" id="vbStage">
+      <div class="vb-list">
+        <article class="vb-item" data-i="0">
+          <h3 class="vb-word"><span class="vb-n mono">01</span>SHOOT</h3>
+          <p class="vb-desc">Cameras up at every fest, talk and late-night jam, from the front row to the rafters.</p>
+          <figure class="vb-frame" data-k="shoot">
+            <div class="vb-media"><img src="assets/drive/photo074.webp" alt="Black-and-white portrait of a guitarist under dramatic side light" loading="lazy" decoding="async"></div>
+            <figcaption class="vb-cap mono">THE NIGHT · MONOCHROME</figcaption>
+          </figure>
+        </article>
+        <article class="vb-item" data-i="1">
+          <h3 class="vb-word"><span class="vb-n mono">02</span>FILM</h3>
+          <p class="vb-desc">Aftermovies, reels and drone passes over the backyard, cut while the night is still warm.</p>
+          <figure class="vb-frame" data-k="film">
+            <div class="vb-media"><img src="assets/drive/still1.jpg" alt="Aerial view of the fest grounds at night, a canopy of fairy lights over the crowd" loading="lazy" decoding="async">
+              <span class="vb-bar t"></span><span class="vb-bar b"></span>
+              <span class="vb-rec mono"><i></i>REC <b id="vbTc">00:00:00:00</b></span></div>
+            <figcaption class="vb-cap mono">THE BACKYARD · OKHLA, FROM ABOVE</figcaption>
+          </figure>
+        </article>
+        <article class="vb-item" data-i="2">
+          <h3 class="vb-word"><span class="vb-n mono">03</span>DESIGN</h3>
+          <p class="vb-desc">Posters, covers and the look of every event, drawn before the first camera comes out.</p>
+          <figure class="vb-frame" data-k="design">
+            <div class="vb-media"><img src="assets/drive/still2.jpg" alt="A vocalist mid-song under blue stage light" loading="lazy" decoding="async">
+              <span class="vb-poster">ANNUAL<br>FEST '26</span>
+              <span class="vb-reg a"></span><span class="vb-reg b"></span>
+              <span class="vb-sw"><i style="background:#241FF3"></i><i style="background:#F2F0EA"></i><i style="background:#0A0A0A"></i><i style="background:#368F97"></i></span></div>
+            <figcaption class="vb-cap mono">THE LOOK · POSTERS &amp; COVERS</figcaption>
+          </figure>
+        </article>
+        <article class="vb-item" data-i="3">
+          <h3 class="vb-word"><span class="vb-n mono">04</span>ARCHIVE</h3>
+          <p class="vb-desc">Every frame kept, named and filed, so the campus can look back at what it was.</p>
+          <figure class="vb-frame" data-k="archive">
+            <div class="vb-media"><div class="vb-sheet"><i><img src="assets/collage/photo012.webp" alt="" loading="lazy" decoding="async"></i><i><img src="assets/collage/photo020.webp" alt="" loading="lazy" decoding="async"></i><i><img src="assets/collage/concert-purple.webp" alt="" loading="lazy" decoding="async"></i><i><img src="assets/collage/photo041.webp" alt="" loading="lazy" decoding="async"></i><i><img src="assets/collage/photo028.webp" alt="" loading="lazy" decoding="async"></i><i><img src="assets/collage/photo062.webp" alt="" loading="lazy" decoding="async"></i><i><img src="assets/collage/sparklers.webp" alt="" loading="lazy" decoding="async"></i><i><img src="assets/collage/photo075.webp" alt="" loading="lazy" decoding="async"></i><i><img src="assets/collage/photo038.webp" alt="" loading="lazy" decoding="async"></i><i><img src="assets/collage/photo088.webp" alt="" loading="lazy" decoding="async"></i><i><img src="assets/collage/crowd-hands.webp" alt="" loading="lazy" decoding="async"></i><i><img src="assets/collage/photo034.webp" alt="" loading="lazy" decoding="async"></i><i><img src="assets/collage/photo005.webp" alt="" loading="lazy" decoding="async"></i><i><img src="assets/collage/stage-lights.webp" alt="" loading="lazy" decoding="async"></i><i><img src="assets/collage/photo052.webp" alt="" loading="lazy" decoding="async"></i><i><img src="assets/collage/photo078.webp" alt="" loading="lazy" decoding="async"></i></div></div>
+            <figcaption class="vb-cap mono">EVERY FRAME, KEPT</figcaption>
+          </figure>
+        </article>
+      </div>
+      <div class="vb-deck" id="vbDeck" aria-hidden="true"><span class="vb-count mono" id="vbCount">FRAME 01 / 04</span><span class="vb-flash" id="vbFlash"></span></div>
+      <div class="vb-rail" aria-hidden="true"><i id="vbProg"></i></div>
+    </div>
   </div>
 </section>
 
@@ -223,45 +269,52 @@
 <!-- giant beat marquee -->
 <div class="beat-marquee marquee" id="beatMarquee" aria-hidden="true"></div>
 
-<!-- 04 · crew -->
-<section class="crew" id="crew">
-  <div class="crew-head">
-    <h2 class="section-title">THE<br>CREW</h2>
-    <p>Sixteen frames behind the lens. One society. <span class="hint-click">Click</span><span class="hint-tap">Tap</span> a portrait — everyone was a kid once.</p>
-  </div>
-  <div class="crew-filters" id="crewFilters" role="group" aria-label="Filter crew by department"></div>
-  <div class="crew-grid" id="crewGrid"></div>
-
-  <!-- 04a · the lineup — one poster per person -->
+<!-- 04 · crew — the lineup (one poster per person) -->
+<section class="crew" id="crew" data-section="THE CREW">
+  <!-- 04a · the lineup — the casting: one take per person -->
   <div class="lineup" id="lineup">
     <div class="lineup-head">
-      <p class="mono lineup-kicker">ISSUE 01 · <span id="lineupTotal">16</span> POSTERS</p>
       <h3 class="section-title lineup-title">THE<br>LINEUP.</h3>
-      <p class="lineup-body">One poster each, roles included. They sit in black and white until you point at them — then the colour comes on. <span class="hint-click">Click</span><span class="hint-tap">Tap</span> to see one full size.</p>
+      <p class="lineup-body">Sixteen people, sixteen posters. Keep scrolling and each one takes the front of the deck in their own colour.</p>
     </div>
-    <ol class="lineup-wall" id="lineupWall"></ol>
+    <div class="lu-runway" id="luRunway">
+      <div class="lu-stage" id="luStage">
+        <div class="lu-glow" aria-hidden="true"></div>
+        <div class="lu-info">
+          <p class="lu-count mono" aria-hidden="true"><span id="luNum">01</span><span class="lu-of">/16</span></p>
+          <div class="lu-roles" id="luRoles" aria-hidden="true"></div>
+          <div class="lu-names" id="luNames" aria-hidden="true"></div>
+          <button class="pill lu-open" id="luOpen" type="button">OPEN POSTER <span class="arr">↗</span></button>
+        </div>
+        <div class="lu-deck" id="luDeck" role="group" aria-roledescription="stack of posters" aria-label="Crew posters, one per person"></div>
+        <ol class="lu-rail" id="luRail" aria-label="Jump to a person"></ol>
+        <p class="lu-hint mono" id="luHint" aria-hidden="true">SCROLL TO TURN THE PAGE ↓</p>
+        <p class="sr-only" id="luLive" aria-live="polite"></p>
+      </div>
+    </div>
   </div>
+</section>
 
-  <!-- 04b · all of us — the whole crew, one frame -->
-  <div class="all-of-us">
-    <div class="aou-copy">
-      <p class="mono aou-kicker">FR ∞ · ALL OF US</p>
-      <h3 class="section-title aou-title">ONE<br>FRAME.</h3>
-      <p class="aou-body">For once, everyone in front of the lens. Humayun's Tomb at blue hour — the crew, the light, the backyard getting bigger.</p>
+<!-- 04b · one frame — full-bleed cover, scroll-zoom -->
+<section class="one-frame" id="one-frame" data-section="ONE FRAME">
+  <div class="of-stage">
+    <div class="of-bg">
+      <img src="assets/drive/crew-group-2000.webp"
+           srcset="assets/drive/crew-group-1400.webp 1400w, assets/drive/crew-group-2000.webp 2000w"
+           sizes="100vw" width="2000" height="1994"
+           alt="The whole Tasveer crew posing together in front of Humayun's Tomb at dusk" loading="lazy" decoding="async">
     </div>
-    <figure class="aou-frame" data-cursor="VIEW">
-      <span class="aou-gate">
-      <span class="gate-corner tl" aria-hidden="true"></span><span class="gate-corner tr" aria-hidden="true"></span>
-      <span class="gate-corner bl" aria-hidden="true"></span><span class="gate-corner br" aria-hidden="true"></span>
-      <span class="inner">
-        <img src="assets/drive/crew-group-1400.webp"
-             srcset="assets/drive/crew-group-1400.webp 1400w, assets/drive/crew-group-2000.webp 2000w"
-             sizes="(max-width:900px) 88vw, 58vw" width="2000" height="1994"
-             alt="The Tasveer crew posing together in front of Humayun's Tomb at dusk" loading="lazy" decoding="async">
-      </span>
-      </span>
-      <figcaption class="mono"><span>HUMAYUN'S TOMB · BLUE HOUR</span> <span>THE CREW · 2025–26</span></figcaption>
-    </figure>
+    <div class="of-scrim" aria-hidden="true"></div>
+    <div class="of-head">
+      <p class="of-kicker mono">FR ∞ · ALL OF US</p>
+      <p class="of-lines">
+        <span class="mask"><span>FOR ONCE, EVERYONE</span></span>
+        <span class="mask"><span>IN FRONT OF THE LENS</span></span>
+      </p>
+    </div>
+    <div class="of-word-wrap" role="img" aria-label="One Frame"><span class="of-word">ONE FRAME</span></div>
+    <button class="of-open pill" type="button" data-cursor="VIEW" aria-label="View the group photo full size">VIEW FULL FRAME <span class="arr">↗</span></button>
+    <p class="of-cap mono"><span>HUMAYUN'S TOMB · BLUE HOUR</span><span>THE CREW · 2025–26</span></p>
   </div>
 </section>
 
@@ -368,5 +421,7 @@
 <script src="js/vendor/ScrollTrigger.min.js"></script>
 <script src="js/vendor/lenis.min.js"></script>
 <script src="js/drive.js"></script>
+<script src="js/emblem.js"></script>
+<script src="js/verbs.js"></script>
 </body>
 </html>

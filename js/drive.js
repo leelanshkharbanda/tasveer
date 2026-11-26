@@ -7,10 +7,11 @@
    ============================================================ */
 "use strict";
 const D = window.TASVEER_DATA;
-const { CONFIG, TEAM, DEPTS, GALLERY, CREDITS } = D;
+const { CONFIG, GALLERY, CREDITS } = D;
 const $ = (s, c=document) => c.querySelector(s);
 const $$ = (s, c=document) => [...c.querySelectorAll(s)];
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let motionOn = localStorage.getItem("tasveer_drive_motion") !== "off";   /* declared early: ScrollTrigger callbacks read it on reload */
 const hasGsap = typeof window.gsap !== "undefined" && typeof window.ScrollTrigger !== "undefined";
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const rand = (a,b) => a + Math.random()*(b-a);
@@ -136,20 +137,36 @@ buildMarquee($("#heroMarquee"), heroItems, {secPerItem:6});
 const beatItems = BEATS.map(b=>`<span class="item" data-item><span class="name">${esc(b.name)}</span><span class="code">${esc(b.code)}</span></span>`).join("");
 buildMarquee($("#beatMarquee"), beatItems, {invert:true, secPerItem:9});
 
-/* photo band: real society frames + the crew's best fest frames */
-const bandImgs = [
-  ...GALLERY.map(g=>[g.src, g.cap.replace(/^ROLL \d+ · FR \d+ — /,"")]),
-  [A+"photo017.webp","green light"],[A+"photo026.webp","red light"],[A+"photo019.webp","the verse"],
-  [A+"photo028.webp","duet"],[A+"photo020.webp","crowning"],[A+"photo007.webp","split light"],
-  [A+"photo012.webp","amber"],[A+"photo014.webp","teal smile"],[A+"photo015.webp","bokeh"],
-  [A+"photo005.webp","peak action"],[A+"photo034.webp","suited up"],[A+"photo038.webp","the crew, formal"],
-  [A+"photo041.webp","the couple"],[A+"photo044.webp","pink saree"],[A+"photo045.webp","purple wash"],
-  [A+"photo051.webp","string lights"],[A+"photo052.webp","kurtas"],[A+"photo057.webp","hands up"],
-  [A+"photo053.webp","the talk, esya"],[A+"photo062.webp","dead focus"],
-  [A+"photo074.webp","monochrome"],[A+"photo075.webp","mid-flip"],[A+"photo077.webp","the diya"],
-  [A+"photo078.webp","the march"],[A+"photo079.webp","purple hour"],
-  [A+"photo081.webp","confetti"],[A+"photo088.webp","red rim"],[A+"photo089.webp","chiaroscuro"],
-  [A+"photo086.webp","yellow"],[A+"photo083.webp","spotlight"],
+/* photo band: a hand-picked strip from the archive */
+const bandImgs = [   /* [thumb, caption, full-size for the viewer] — frames pulled from THE ARCHIVE dataset (assets/wheel) */
+  ["assets/wheel/w-006.webp","holi, in colour","assets/wheel/wf-006.webp"],
+  ["assets/wheel/w-063.webp","the musicians","assets/wheel/wf-063.webp"],
+  ["assets/wheel/w-013.webp","night court","assets/wheel/wf-013.webp"],
+  ["assets/wheel/w-070.webp","mono portrait","assets/wheel/wf-070.webp"],
+  ["assets/wheel/w-034.webp","stage, magenta","assets/wheel/wf-034.webp"],
+  ["assets/wheel/w-076.webp","the Taj, mirrored","assets/wheel/wf-076.webp"],
+  ["assets/wheel/w-028.webp","lantern glow","assets/wheel/wf-028.webp"],
+  ["assets/wheel/w-049.webp","fest stage","assets/wheel/wf-049.webp"],
+  ["assets/wheel/w-054.webp","behind the lens","assets/wheel/wf-054.webp"],
+  ["assets/wheel/w-097.webp","lantern bazaar","assets/wheel/wf-097.webp"],
+  ["assets/wheel/w-035.webp","mid-gesture","assets/wheel/wf-035.webp"],
+  ["assets/wheel/w-077.webp","sparkler loops","assets/wheel/wf-077.webp"],
+  ["assets/wheel/w-038.webp","the elder","assets/wheel/wf-038.webp"],
+  ["assets/wheel/w-082.webp","guitar circle","assets/wheel/wf-082.webp"],
+  ["assets/wheel/w-027.webp","holi, up close","assets/wheel/wf-027.webp"],
+  ["assets/wheel/w-094.webp","heart, at sunset","assets/wheel/wf-094.webp"],
+  ["assets/wheel/w-020.webp","the jump shot","assets/wheel/wf-020.webp"],
+  ["assets/wheel/w-062.webp","at the wheel","assets/wheel/wf-062.webp"],
+  ["assets/wheel/w-052.webp","the kurta squad","assets/wheel/wf-052.webp"],
+  ["assets/wheel/w-029.webp","mosque, blue hour","assets/wheel/wf-029.webp"],
+  ["assets/wheel/w-036.webp","two friends","assets/wheel/wf-036.webp"],
+  ["assets/wheel/w-080.webp","street dancer","assets/wheel/wf-080.webp"],
+  ["assets/wheel/w-066.webp","the lane","assets/wheel/wf-066.webp"],
+  ["assets/wheel/w-087.webp","reaching out","assets/wheel/wf-087.webp"],
+  ["assets/wheel/w-043.webp","puddle reflection","assets/wheel/wf-043.webp"],
+  ["assets/wheel/w-075.webp","white beard","assets/wheel/wf-075.webp"],
+  ["assets/wheel/w-031.webp","golden hour","assets/wheel/wf-031.webp"],
+  ["assets/wheel/w-100.webp","small and still","assets/wheel/wf-100.webp"],
 ];
 const tileCls = ["t-a","t-b","t-c"];
 const bandHTML = bandImgs.map((im,i)=>`<figure class="photo-tile ${tileCls[i%3]}" data-item data-cursor="VIEW"><img src="${esc(im[0])}" alt="" loading="lazy" decoding="async"><figcaption class="mono">${esc(im[1])}</figcaption></figure>`).join("");
@@ -157,7 +174,6 @@ buildMarquee($("#photoBand"), bandHTML, {invert:true, secPerItem:4, pauseHover:t
 
 /* ---------- hero: cinema video + parallax wordmark + stills ---------- */
 const heroVideo = $("#heroVideo");
-const heroWordWrap = $("#heroWordWrap");
 const STILLS = [
   ["assets/drive/still1.jpg","the lawns, fest night — from above"],
   ["assets/drive/still2.jpg","the verse, amber light"],
@@ -170,11 +186,7 @@ $("#heroStills").innerHTML = STILLS.map(s=>`<figure data-cursor="VIEW"><div clas
    zooms from fully-fitted at rest to monumental bleed — so TASVEER is
    always readable as a whole on load, then pushes past the edges. */
 const heroVideoB = $("#heroVideoB");
-const heroWord = $(".hero-word");
-let heroP = 0, wordFit = 1;
-function measureWord(){
-  if (heroWord) wordFit = Math.min(1, (innerWidth * 0.9) / heroWord.offsetWidth);
-}
+let heroP = 0;
 /* projector shutter: randomized vertical bars wipe Shot B in (signature) */
 const SHUTTER_BARS = Array.from({length:9}, ()=>({off: Math.random()*0.45}));
 const shutterOK = typeof CSS!=="undefined" && CSS.supports && CSS.supports("mask-image","linear-gradient(90deg,black,transparent)");
@@ -195,6 +207,7 @@ function heroChoreo(p){
     heroVideoB.style.transform = t;
     if (touchDevice){ heroVideoB.style.opacity = 0; }
     else {
+      if (p > 0.25 && heroVideoB.paused && motionOn && !reduced) heroVideoB.play().catch(()=>{});
       const local = Math.min(1, Math.max(0, (p - 0.38) / 0.30));
       if (shutterOK){ /* callers gate motionOn && !reduced; calm/reduced hold static Shot A via heroVideoState */
         heroVideoB.style.opacity = local > 0 ? "1" : "0";
@@ -206,26 +219,19 @@ function heroChoreo(p){
       }
     }
   }
-  if (heroWordWrap){
-    const ws = wordFit + (1.06 - wordFit) * p;
-    const y = window.scrollY * 0.12 - (1 - p) * 0.09 * innerHeight;
-    heroWordWrap.style.transform = `translateY(${y.toFixed(1)}px) scale(${ws.toFixed(4)})`;
-  }
 }
 function heroVideoState(){
   const play = motionOn && !reduced;
   if (heroVideo) play ? heroVideo.play().catch(()=>{}) : heroVideo.pause();
-  if (heroVideoB) (play && !touchDevice) ? heroVideoB.play().catch(()=>{}) : heroVideoB.pause();
+  if (heroVideoB) (play && !touchDevice && heroP > 0.25) ? heroVideoB.play().catch(()=>{}) : heroVideoB.pause();   // Shot B (13MB) only starts loading when the blend is near
   if (!play){
     if (heroVideo) heroVideo.style.transform = "scale(1)";
     if (heroVideoB){ heroVideoB.style.transform = "scale(1)"; heroVideoB.style.opacity = 0; heroVideoB.style.maskImage = ""; heroVideoB.style.webkitMaskImage = ""; }
-    if (heroWordWrap) heroWordWrap.style.transform = `translateY(${(-0.09 * innerHeight).toFixed(1)}px) scale(${wordFit.toFixed(4)})`;
   } else heroChoreo(heroP);
   syncInterlude();
 }
-measureWord();
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(()=>{ measureWord(); if (motionOn && !reduced) heroChoreo(heroP); else heroVideoState(); });
-addEventListener("resize", ()=>{ measureWord(); if (motionOn && !reduced) heroChoreo(heroP); else heroVideoState(); }, {passive:true});
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(()=>{ if (motionOn && !reduced) heroChoreo(heroP); else heroVideoState(); });
+addEventListener("resize", ()=>{ if (motionOn && !reduced) heroChoreo(heroP); else heroVideoState(); }, {passive:true});
 /* interlude: living footage, plays on screen, scroll zoom-out */
 const interludeVideo = $("#interludeVideo");
 let interludeVisible = false, interludeP = 0;
@@ -242,7 +248,7 @@ if (interludeVideo && "IntersectionObserver" in window){
 }
 if (hasGsap && !reduced){
   ScrollTrigger.create({
-    trigger:".hero", start:"top top", end:"bottom bottom", scrub:true,
+    trigger:".hero", start:()=>`top+=${$("#heroBody") ? $("#heroBody").offsetTop : 0} top`, end:"bottom bottom", scrub:true, invalidateOnRefresh:true,
     onUpdate:self=>{ heroP = self.progress; if (motionOn) heroChoreo(self.progress); }
   });
   ScrollTrigger.create({
@@ -269,15 +275,15 @@ function revealOnEnter(trigger, targets, fromVars, toVars){
     onRefresh: self=>{ if (self.progress > 0) gsap.set(els, {clearProps:"transform,opacity"}); }
   });
 }
-$$(".hero-title .mask > span").forEach((sp,i)=>{
-  if (!hasGsap || reduced) return;
-  gsap.fromTo(sp, {yPercent:105}, {yPercent:0, duration:1.1, delay:.15+i*.12, ease:"power4.out"});
-});
+/* the headline rises when the hero proper arrives (the emblem comes first now) */
+if (hasGsap && !reduced){
+  const heroSpans = $$(".hero-title .mask > span");
+  gsap.set(heroSpans, {yPercent:105});
+  ScrollTrigger.create({ trigger:".hero-head", start:"top 88%", once:true,
+    onEnter:()=>gsap.to(heroSpans, {yPercent:0, duration:1.1, stagger:.12, ease:"power4.out"}) });
+}
 revealOnEnter(".story", ".story-left > *, .story-right > *", {opacity:0, y:50}, {opacity:1, y:0, duration:.9, stagger:.1, ease:"power3.out"});
-revealOnEnter(".collage", ".collage figure", {opacity:0, y:70}, {opacity:1, y:0, duration:1.1, stagger:.18, ease:"power3.out"});
 revealOnEnter(".roll-head", ".roll-head > *", {opacity:0, y:40}, {opacity:1, y:0, duration:.8, stagger:.1, ease:"power3.out"});
-revealOnEnter(".crew-head", ".crew-head > *", {opacity:0, y:40}, {opacity:1, y:0, duration:.8, stagger:.12, ease:"power3.out"});
-revealOnEnter(".all-of-us", ".aou-copy > *, .aou-frame", {opacity:0, y:50}, {opacity:1, y:0, duration:.9, stagger:.1, ease:"power3.out"});
 revealOnEnter(".open-call", ".open-call > *:not(.iso)", {opacity:0, y:50}, {opacity:1, y:0, duration:.9, stagger:.1, ease:"power3.out"});
 revealOnEnter(".footer-panel", ".footer-statement, .footer-grid, .footer-whisper", {opacity:0, y:50}, {opacity:1, y:0, duration:.9, stagger:.12, ease:"power3.out"});
 $$(".stretch").forEach(el=>{
@@ -322,87 +328,146 @@ ROLL.forEach((beat,i)=>{
 });
 revealOnEnter(".roll", ".beat", {opacity:0, y:30}, {opacity:1, y:0, duration:.7, stagger:.08, ease:"power3.out"});
 
-/* ---------- crew: warm-mono grid, childhood crossfade ---------- */
-const crewGrid = $("#crewGrid"), crewFilters = $("#crewFilters");
-TEAM.forEach(t=>{
-  const b = document.createElement("button");
-  b.className = "member"; b.dataset.dept = t.dept;
-  b.setAttribute("aria-pressed","false");
-  b.setAttribute("data-cursor","FLIP");
-  const main = t.img
-    ? `<img class="main" src="assets/team/${esc(t.img)}" alt="Portrait of ${esc(t.name)}" loading="lazy">`
-    : `<span class="pending mono">◉<br>AWAITING<br>EXPOSURE</span>`;
-  const child = t.child
-    ? `<img class="child" src="assets/team/${esc(t.child)}" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="tag">FRAME 00 · ${esc(t.name)} · BEFORE TASVEER</span>`
-    : (t.back && t.back.type==="quote"
-      ? `<span class="quote-back" aria-hidden="true"><span class="quote-text">\u201C${esc(t.back.text)}\u201D</span><span class="tag mono">${esc(t.back.tag)}</span></span>`
-      : "");
-  b.innerHTML = `<span class="imgwrap">${main}${child}</span>
-    <span class="member-meta"><span class="member-name">${esc(t.name)}</span><span class="member-role">${esc(t.role)}</span></span>`;
-  b.setAttribute("aria-label", `${t.name}, ${t.role}${t.child ? ". Activate to see their childhood photo." : (t.back ? ". Activate to read their note." : "")}`);
-  if (t.child || (t.back && t.back.type==="quote")){
-    b.addEventListener("click", ()=>{
-      const flipped = b.classList.toggle("flipped");
-      b.setAttribute("aria-pressed", String(flipped));
-      const backEl = $(".child", b) || $(".quote-back", b);
-      if (backEl) backEl.setAttribute("aria-hidden", String(!flipped));
-      const mainEl = $(".main", b); if (mainEl) mainEl.setAttribute("aria-hidden", String(flipped));
-    });
-  } else {
-    b.addEventListener("click", ()=>toast(t.img ? "NO CHILDHOOD FRAME ON FILE — YET." : `${t.name.toUpperCase()} — FRAME PENDING. SEND US ONE.`));
-  }
-  crewGrid.appendChild(b);
-});
-DEPTS.forEach(([key,label],i)=>{
-  const c = document.createElement("button");
-  c.textContent = label; c.dataset.dept = key;
-  c.setAttribute("aria-pressed", String(i===0));
-  c.addEventListener("click", ()=>{
-    $$("#crewFilters button").forEach(x=>x.setAttribute("aria-pressed","false"));
-    c.setAttribute("aria-pressed","true");
-    $$(".member").forEach(m=>m.classList.toggle("filtered-out", key!=="all" && m.dataset.dept!==key));
-    safeRefresh();
-  });
-  crewFilters.appendChild(c);
-});
-revealOnEnter(".crew-grid", ".member", {opacity:0, y:36}, {opacity:1, y:0, duration:.7, stagger:{each:.05, from:"start"}, ease:"power3.out"});
 
-/* ---------- the lineup: one poster per person (mono -> colour, tilt, lightbox) ---------- */
+/* ---------- the lineup: "the casting" — pinned deck, one take per person ---------- */
 (function lineup(){
-  const L = D.LINEUP, wall = $("#lineupWall");
-  if (!L || !wall) return;
-  const p2 = n => String(n).padStart(2,"0");
-  const items = L.cards.map(([name,role,accent],i)=>({
-    name, role, accent, thumb:L.dir+"pt-"+p2(i+1)+".webp", full:L.dir+"p-"+p2(i+1)+".webp",
-    alt:`Tasveer poster: ${name}, ${role}`
-  }));
-  items.forEach((it,i)=>{
-    const li = document.createElement("li"); li.className = "li"; li.style.setProperty("--accent", it.accent);
-    li.innerHTML = `<button class="li-card" type="button" data-cursor="VIEW" aria-label="${esc(it.name)}, ${esc(it.role)}. Open poster full size.">
-      <span class="li-tape" aria-hidden="true"></span>
-      <span class="li-poster"><img src="${esc(it.thumb)}" alt="${esc(it.alt)}" width="640" height="800" loading="lazy" decoding="async"><span class="li-glare" aria-hidden="true"></span></span>
-      <span class="li-meta mono"><span><span class="no"></span> · <b>${esc(it.name)}</b></span><span>${esc(it.role)}</span></span></button>`;
-    const btn = $(".li-card", li), poster = $(".li-poster", li);
-    btn.addEventListener("click", ()=>lbOpen(items.map(x=>({src:x.full, cap:`${x.name} · ${x.role}`, alt:x.alt})), i, btn));
-    if (!touchDevice && !reduced){
-      btn.addEventListener("pointermove", e=>{
-        const r = poster.getBoundingClientRect(), x = (e.clientX-r.left)/r.width, y = (e.clientY-r.top)/r.height;
-        li.style.setProperty("--ty", ((x-.5)*14).toFixed(2)+"deg");
-        li.style.setProperty("--tx", ((.5-y)*14).toFixed(2)+"deg");
-        poster.style.setProperty("--gx", (x*100).toFixed(1)+"%"); poster.style.setProperty("--gy", (y*100).toFixed(1)+"%");
-      });
-      btn.addEventListener("pointerleave", ()=>{ li.style.setProperty("--tx","0deg"); li.style.setProperty("--ty","0deg"); });
-    }
-    wall.appendChild(li);
+  const L = D.LINEUP, runway = $("#luRunway"), stage = $("#luStage"), deck = $("#luDeck");
+  if (!L || !runway || !deck) return;
+  const N = L.cards.length, p2 = n => String(n).padStart(2,"0");
+  const clamp = (v,a,b) => Math.min(b, Math.max(a, v));
+  const items = L.cards.map(([name,role,accent,file],i)=>({ name, role, accent,
+    thumb:L.dir+"pt-"+p2(file||i+1)+".webp", full:L.dir+"p-"+p2(file||i+1)+".webp", alt:`Tasveer poster: ${name}, ${role}` }));
+  const hexRgb = h => [1,3,5].map(k=>parseInt(h.slice(k,k+2),16));
+  const rgbs = items.map(it=>hexRgb(it.accent));
+  runway.style.setProperty("--lu-n", N);
+  const $roles = $("#luRoles"), $names = $("#luNames"), $rail = $("#luRail"), $num = $("#luNum"),
+        $live = $("#luLive"), $hint = $("#luHint"), $open = $("#luOpen");
+  const staticMode = !hasGsap || reduced;
+  if (staticMode) document.documentElement.classList.add("lu-static");
+  const viewerItems = ()=>items.map(x=>({src:x.full, cap:`${x.name} · ${x.role}`, alt:x.alt}));
+
+  const cards = items.map((it,i)=>{
+    const el = document.createElement("div"); el.className = "lu-card"; el.dataset.i = i; el.setAttribute("data-cursor","VIEW");
+    el.setAttribute("role","button"); el.tabIndex = -1; el.setAttribute("aria-hidden","true");
+    el.setAttribute("aria-label", `${it.name}, ${it.role}. Open poster full size.`);
+    const im = new Image(); im.alt = it.alt; im.decoding = "async"; im.draggable = false; el.appendChild(im);
+    if (staticMode){ im.src = it.thumb; im.loading = "lazy"; }
+    deck.appendChild(el);
+    el.addEventListener("click", ()=>{ if (staticMode || el.classList.contains("front")) lbOpen(viewerItems(), i, el); });
+    el.addEventListener("keydown", e=>{ if ((e.key==="Enter"||e.key===" ") && (staticMode || el.classList.contains("front"))){ e.preventDefault(); lbOpen(viewerItems(), i, el); } });
+    return { el, im, it, loaded:staticMode, on:false };
   });
-  /* touch: whichever posters sit in the middle band of the screen come on in colour */
-  if (touchDevice && "IntersectionObserver" in window){
-    const io = new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("lit", e.isIntersecting)),
-      {rootMargin:"-38% 0px -38% 0px"});
-    $$(".li", wall).forEach(li=>io.observe(li));
+  if (staticMode){ cards.forEach(c=>{ c.el.classList.add("on"); c.el.removeAttribute("aria-hidden"); c.el.tabIndex = 0; }); return; }
+
+  items.forEach((it,i)=>{
+    const r = document.createElement("span"); r.className = "lu-role" + (it.role.length > 16 ? " long" : ""); r.innerHTML = esc(it.role.replace("-"," ")).replace(/ (Lead)$/,"<br>$1"); $roles.appendChild(r);
+    const n = document.createElement("span"); n.className = "lu-name"; n.textContent = it.name; $names.appendChild(n);
+    const li = document.createElement("li"), b = document.createElement("button");
+    b.type = "button"; b.className = "lu-f"; b.setAttribute("aria-label", `${it.name}, ${it.role}`);
+    const im = new Image(); im.alt = ""; im.loading = "lazy"; im.decoding = "async"; im.src = it.thumb; b.appendChild(im);
+    b.addEventListener("click", ()=>jump(i)); li.appendChild(b); $rail.appendChild(li);
+  });
+  const roleEls = $$(".lu-role", $roles), nameEls = $$(".lu-name", $names), frames = $$(".lu-f", $rail);
+  const HOLD_START = .3, HOLD_END = .6;
+  let pos = 0, target = 0, raf = 0, cur = -1, W = 400, H = 500, armed = false;
+
+  function load(i){ const c = cards[(i+N)%N]; if (!c.loaded && armed){ c.loaded = true; c.im.src = c.it.full; } }
+  function setCur(i){
+    if (i === cur) return;
+    const prev = cur; cur = i;
+    roleEls.forEach((e,k)=>{ e.classList.toggle("on", k===i); e.classList.toggle("out", k===prev && k!==i && i>prev); if (k!==i && k!==prev) e.classList.remove("out"); });
+    nameEls.forEach((e,k)=>e.classList.toggle("on", k===i));
+    frames.forEach((e,k)=>e.classList.toggle("cur", k===i));
+    $num.textContent = p2(i+1);
+    $live.textContent = `${items[i].name}, ${items[i].role}. ${i+1} of ${N}.`;
+    $open.setAttribute("aria-label", `Open poster: ${items[i].name}`);
+    for (let k=-1;k<=4;k++) if (i+k>=0 && i+k<N) load(i+k);
   }
-  revealOnEnter("#lineup", ".li", {opacity:0, y:70, scale:.92}, {opacity:1, y:0, scale:1, duration:.85, stagger:{each:.06, from:"start"}, ease:"power3.out"});
+  function render(){
+    const near = clamp(Math.round(pos), 0, N-1);
+    for (let i=0;i<N;i++){
+      const c = cards[i], d = i - pos, ad = Math.abs(d);
+      if (d < -1.25 || d > 4.2){ if (c.on){ c.on = false; c.el.classList.remove("on"); } continue; }
+      if (!c.on){ c.on = true; c.el.classList.add("on"); }
+      let x=0,y=0,rot=0,sc=1,op=1,g=0,br=1,z;
+      if (d >= 0){                                   // waiting in the deck
+        const t = Math.min(d,4);
+        sc = 1 - t*.045; y = t*H*.03; rot = ((i%3)-1)*2.2*Math.min(d,1);
+        g = Math.min(d,1)*.9; br = 1 - Math.min(d,3)*.18; z = 100 - Math.round(d*10);
+        if (d > 3.2) op = clamp(4.2-d,0,1);
+      } else {                                       // flicked off the top
+        const t = -d, dir = (i%2 ? 1 : -1);
+        x = dir * Math.pow(t,.9) * (W*1.1 + 30); y = -t*H*.06; rot = dir*t*17; sc = 1 + t*.03;
+        op = 1 - clamp((t-.25)/.6,0,1); z = 200;
+      }
+      c.el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${rot.toFixed(2)}deg) scale(${sc.toFixed(3)})`;
+      c.el.style.opacity = op.toFixed(2); c.el.style.zIndex = z;
+      c.el.style.setProperty("--g", g.toFixed(2)); c.el.style.setProperty("--b", br.toFixed(2));
+      const isFront = i === near && Math.abs(d) < .5;
+      if (isFront !== c.el.classList.contains("front")){
+        c.el.classList.toggle("front", isFront); c.el.tabIndex = isFront ? 0 : -1;
+        c.el.setAttribute("aria-hidden", String(!isFront));
+      }
+    }
+    /* accent flood: blend the two nearest takes */
+    const f = clamp(pos,0,N-1), i0 = Math.floor(f), i1 = Math.min(N-1,i0+1), t = f - i0;
+    const rgb = rgbs[i0].map((v,k)=>Math.round(v + (rgbs[i1][k]-v)*t));
+    stage.style.setProperty("--accent", `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`);
+    setCur(near);
+  }
+  function tick(){
+    const diff = target - pos;
+    if (Math.abs(diff) < .0015){ pos = target; raf = 0; render(); return; }
+    pos += diff*.14; render(); raf = requestAnimationFrame(tick);
+  }
+  function setTarget(v){ target = v; if (!raf) raf = requestAnimationFrame(tick); }
+  function measure(){ W = deck.clientWidth || 400; H = deck.clientHeight || 500; render(); }
+  function span(){ return runway.offsetHeight - innerHeight; }
+  function jump(i){
+    const y = runway.getBoundingClientRect().top + scrollY + span()*((i + HOLD_START)/(N-1+HOLD_START+HOLD_END));
+    if (typeof lenis !== "undefined" && lenis) lenis.scrollTo(y, {duration:1.3}); else scrollTo({top:y, behavior:"smooth"});
+  }
+  ScrollTrigger.create({
+    trigger:runway, start:"top top", end:"bottom bottom",
+    onUpdate:self=>{
+      setTarget(clamp(self.progress*(N-1+HOLD_START+HOLD_END) - HOLD_START, 0, N-1));
+      if (self.progress > .015) $hint.classList.add("gone");
+    },
+    onRefresh:self=>{ target = pos = clamp(self.progress*(N-1+HOLD_START+HOLD_END) - HOLD_START, 0, N-1); measure(); }
+  });
+  $open.addEventListener("click", ()=>lbOpen(viewerItems(), clamp(Math.round(pos),0,N-1), $open));
+  if ("IntersectionObserver" in window){
+    new IntersectionObserver((es,ob)=>{ if (es.some(e=>e.isIntersecting)){ armed = true; ob.disconnect(); for (let k=0;k<=4;k++) load(k); load(cur); } },
+      {rootMargin:"900px 0px"}).observe(runway);
+  } else { armed = true; }
+  addEventListener("resize", measure, {passive:true});
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+  setCur(0); measure();
   revealOnEnter("#lineup", ".lineup-head > *", {opacity:0, y:36}, {opacity:1, y:0, duration:.8, stagger:.1, ease:"power3.out"});
+})();
+
+/* ---------- one frame: full-bleed cover, scroll-scrubbed zoom + colour-in ---------- */
+(function oneFrame(){
+  const sec = $("#one-frame"); if (!sec) return;
+  const img = $(".of-bg img", sec), openBtn = $(".of-open", sec), stage = $(".of-stage", sec);
+  const open = ()=>lbOpen([{src:"assets/drive/crew-group-2000.webp", cap:"HUMAYUN'S TOMB · BLUE HOUR", alt:img.alt}], 0, openBtn);
+  openBtn.addEventListener("click", open);
+  stage.addEventListener("click", e=>{ if (!e.target.closest(".of-open")) open(); });
+  stage.setAttribute("data-cursor","VIEW");
+  if (!hasGsap || reduced){ sec.style.setProperty("--p", reduced ? "1" : ".7"); return; }
+  ScrollTrigger.create({
+    trigger:sec, start:"top top", end:"bottom bottom", scrub:true,
+    onUpdate:self=>sec.style.setProperty("--p", self.progress.toFixed(4)),
+    onRefresh:self=>sec.style.setProperty("--p", self.progress.toFixed(4))
+  });
+  /* the lines slide up out of their masks like the cover page */
+  const spans = $$(".of-lines .mask > span", sec);
+  gsap.set(spans, {yPercent:105});
+  ScrollTrigger.create({trigger:sec, start:"top 55%", once:true,
+    onEnter:()=>gsap.to(spans, {yPercent:0, duration:1.1, stagger:.12, ease:"power4.out"}),
+    onRefresh:self=>{ if (self.progress>0) gsap.set(spans,{yPercent:0}); }});
+  gsap.from([".of-kicker",".of-open",".of-cap"].map(q=>$(q,sec)), {opacity:0, y:24, duration:.9, stagger:.1, ease:"power3.out",
+    scrollTrigger:{trigger:sec, start:"top 55%", once:true}});
 })();
 
 /* ---------- subscribe: honest mailto compose (no fake backend) ---------- */
@@ -430,7 +495,6 @@ $("#progressPill").addEventListener("click", ()=>{
 });
 
 /* ---------- motion toggle ---------- */
-let motionOn = localStorage.getItem("tasveer_drive_motion") !== "off";
 function applyMotion(){
   document.body.classList.toggle("calm", !motionOn);
   $$("[data-motion-toggle]").forEach(b=>{
@@ -465,7 +529,7 @@ if (matchMedia("(pointer: fine)").matches && !reduced && hasGsap){
   });
   document.addEventListener("mouseover", e=>{
     const t = e.target.closest("[data-cursor],a,button");
-    if (t){ label.textContent = (t.dataset.easteregg && e.clientX > innerWidth/2) ? t.dataset.easteregg : (t.dataset.cursor || (t.classList.contains("member") ? "FLIP" : "GO")); label.style.display="block"; }
+    if (t){ label.textContent = (t.dataset.easteregg && e.clientX > innerWidth/2) ? t.dataset.easteregg : (t.dataset.cursor || "GO"); label.style.display="block"; }
     else label.style.display="none";
     cur.classList.toggle("view", !!t && t.dataset.cursor==="VIEW");
   });
@@ -495,7 +559,7 @@ if (hasGsap && !reduced){
 const curtain = $("#introCurtain");
 if (curtain){
   let killed = false;
-  const kill = ()=>{ if (killed) return; killed = true; try{ sessionStorage.setItem("tasveer_leader_shown","1"); }catch(_){} document.body.style.overflow = ""; if (curtain.parentNode) curtain.remove(); if (!reduced && motionOn) decodeText($(".hero-kicker")); };
+  const kill = ()=>{ if (killed) return; killed = true; try{ sessionStorage.setItem("tasveer_leader_shown","1"); }catch(_){} document.body.style.overflow = ""; if (curtain.parentNode) curtain.remove(); window.__tasveerReady = true; document.dispatchEvent(new Event("tasveer:ready")); if (!reduced && motionOn) decodeText($(".hero-kicker")); };
   if (reduced || !motionOn || !hasGsap) kill();
   else {
     document.body.style.overflow = "hidden";
@@ -684,8 +748,8 @@ const pad2 = n => String(n).padStart(2,"0");
 function lbGroupFor(fig){
   if (fig.closest("#photoBand")){
     const src = $("img",fig).getAttribute("src");
-    const items = bandImgs.map(b=>({src:b[0], cap:b[1], alt:b[1]}));
-    return {items, idx: Math.max(0, items.findIndex(i=>i.src===src))};
+    const items = bandImgs.map(b=>({src:b[2]||b[0], cap:b[1], alt:b[1]}));
+    return {items, idx: Math.max(0, bandImgs.findIndex(b=>b[0]===src))};
   }
   if (fig.closest(".sheet-track")){
     const figs = $$(".sheet-frame", sheetTrack);
@@ -695,7 +759,7 @@ function lbGroupFor(fig){
     const figs = $$(".hero-stills figure");
     return {items: STILLS.map(s=>({src:s[0], cap:s[1], alt:s[1]})), idx: figs.indexOf(fig)};
   }
-  const cont = fig.closest(".beat-frames, .collage, .all-of-us");
+  const cont = fig.closest(".beat-frames, .collage");
   if (cont){
     const figs = $$("figure", cont);
     const items = figs.map(f=>{ const im=$("img",f), c=$("figcaption",f);
@@ -744,13 +808,27 @@ function lbCloseFn(){
   lb.setAttribute("aria-hidden","true");
   lb.inert = true;
 }
+/* press feedback: bright ring + a quick zoom pulse on the frame, then the viewer opens */
+function lbSnap(fig){
+  if (reduced || !motionOn) return false;
+  const im = $("img",fig), ring = document.createElement("i");
+  ring.className = "snap-ring"; fig.appendChild(ring);
+  if (im){ im.classList.remove("snap-img"); void im.offsetWidth; im.classList.add("snap-img"); }
+  setTimeout(()=>{ ring.remove(); if (im) im.classList.remove("snap-img"); }, 560);
+  return true;
+}
 function lbActivate(fig){
   if (performance.now() < sheetSuppressUntil && fig.closest(".sheet-track")) return;
+  if (fig.dataset.snapping) return;
   const g = lbGroupFor(fig);
-  if (g) lbOpen(g.items, g.idx, fig);
+  if (!g) return;
+  if (lbSnap(fig)){
+    fig.dataset.snapping = "1";
+    setTimeout(()=>{ delete fig.dataset.snapping; lbOpen(g.items, g.idx, fig); }, 200);
+  } else lbOpen(g.items, g.idx, fig);
 }
 /* mark every viewable frame as a button */
-$$(".hero-stills figure, .collage figure, .beat-frames figure, .sheet-frame, #photoBand .photo-tile, .aou-frame").forEach(f=>{
+$$(".hero-stills figure, .collage figure, .beat-frames figure, .sheet-frame, #photoBand .photo-tile").forEach(f=>{
   f.setAttribute("data-lb","");
   if (f.getAttribute("aria-hidden")==="true") return; /* clickable, but no tab stop / role / label */
   f.setAttribute("tabindex","0"); f.setAttribute("role","button");
@@ -826,36 +904,6 @@ if (fstate && hasGsap && !reduced){
   ScrollTrigger.create({trigger:fstate, start:"top 82%", once:true,
     onEnter:()=>fstate.classList.remove("undeveloped"),
     onRefresh:self=>{ if (self.progress>0) fstate.classList.remove("undeveloped"); }});
-}
-
-/* ---------- crew: tactile 3D tilt on the portrait (fine pointer) ---------- */
-if (matchMedia("(pointer: fine)").matches && !reduced){
-  $$(".member").forEach(m=>{
-    const w = $(".imgwrap", m); if (!w) return;
-    m.addEventListener("mousemove", e=>{
-      const r = w.getBoundingClientRect();
-      const px = (e.clientX - r.left)/r.width - 0.5, py = (e.clientY - r.top)/r.height - 0.5;
-      w.style.transform = `perspective(700px) rotateY(${(px*7).toFixed(2)}deg) rotateX(${(-py*7).toFixed(2)}deg)`;
-    });
-    m.addEventListener("mouseleave", ()=>{ w.style.transform = ""; });
-  });
-}
-/* ---------- collage: scroll-depth parallax (figures drift, hover zoom composes) ---------- */
-$$(".collage figure").forEach(f=>{
-  const im = $("img",f); if (!im || $(".inner",f)) return;
-  const w = document.createElement("span"); w.className = "inner";
-  f.insertBefore(w,im); w.appendChild(im);
-});
-if (hasGsap && !reduced){
-  gsap.fromTo(".collage .c-small", {y:50}, {y:-50, ease:"none",
-    scrollTrigger:{trigger:".collage", start:"top bottom", end:"bottom top", scrub:true}});
-  gsap.fromTo(".collage .c-big", {y:-40}, {y:40, ease:"none",
-    scrollTrigger:{trigger:".collage", start:"top bottom", end:"bottom top", scrub:true}});
-  /* inner-image drift inside each gate (counter-parallax depth) */
-  gsap.fromTo(".collage .c-small img", {yPercent:-5}, {yPercent:5, ease:"none",
-    scrollTrigger:{trigger:".collage", start:"top bottom", end:"bottom top", scrub:true}});
-  gsap.fromTo(".collage .c-big img", {yPercent:5}, {yPercent:-5, ease:"none",
-    scrollTrigger:{trigger:".collage", start:"top bottom", end:"bottom top", scrub:true}});
 }
 
 /* ---------- the archive: coverflow wheel (circular, drag / swipe / keys / auto-spin) ---------- */
@@ -1039,9 +1087,9 @@ const pf = $("#pathfinder");
 if (pf && "IntersectionObserver" in window){
   const links = $$("a", pf);
   const setActive = id=>links.forEach(a=>a.classList.toggle("active", a.dataset.scene===id));
-  const secs = ["top","story","roll","archive","crew","open-call"].map(id=>document.getElementById(id)).filter(Boolean);
+  const secs = ["top","story","roll","archive","crew","one-frame","open-call"].map(id=>document.getElementById(id)).filter(Boolean);
   const io = new IntersectionObserver(es=>{
-    es.forEach(e=>{ if (e.isIntersecting) setActive(e.target.id); });
+    es.forEach(e=>{ if (e.isIntersecting) setActive(e.target.id === "one-frame" ? "crew" : e.target.id); });
   }, {rootMargin:"-45% 0px -45% 0px", threshold:0});
   secs.forEach(s=>io.observe(s));
   setActive("top");
